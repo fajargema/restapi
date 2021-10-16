@@ -5,7 +5,7 @@ exports.findAll = (req, res) => {
         if (err)
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while retrieving customers."
+                    err.message || "Some error occurred while retrieving product."
             });
         else res.send(data);
     });
@@ -24,5 +24,16 @@ exports.findOne = (req, res) => {
                 });
             }
         } else res.send(data);
+    });
+};
+
+exports.findHarga = (req, res) => {
+    Product.findByHarga(req.params.harga_produk, (err, data) => {
+        if (err)
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving product."
+            });
+        else res.send(data);
     });
 };

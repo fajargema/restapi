@@ -23,17 +23,30 @@ Product.findById = (id_produk, result) => {
     });
 };
 
-Product.getAll = result => {
-    sql.query("SELECT count(harga_produk) as total FROM produk where harga_produk > 80000", (err, res) => {
+Product.findByHarga = (harga_produk, result) => {
+    sql.query(`SELECT count(harga_produk) as total FROM produk where harga_produk > ${harga_produk}`, (err, res) => {
         if (err) {
             console.log("error: ", err);
-            result(null, err);
+            result(err, null);
             return;
         }
 
         let total = JSON.stringify(res);
 
         console.log(total);
+        result(null, res);
+    });
+};
+
+Product.getAll = result => {
+    sql.query("SELECT * FROM produk", (err, res) => {
+        if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+        }
+
+        console.log("Produk: " + res);
         result(null, res);
     });
 };
